@@ -1,1 +1,94 @@
-<p>sign-up works!</p>
+<article class="signup__page">
+  <h2>Create an account</h2>
+  <form class="signup__form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>First Name</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="firstNameFormControl"
+        [errorStateMatcher]="matcher"
+        placeholder="First Name"
+      />
+      @if (signupForm.get('firstNameFormControl')?.hasError('required')) {
+      <mat-error>First Name is <strong>required</strong></mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Last Name</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="lastNameFormControl"
+        [errorStateMatcher]="matcher"
+        placeholder="Last Name"
+      />
+      @if (signupForm.get('lastNameFormControl')?.hasError('required')) {
+      <mat-error>Last Name is <strong>required</strong></mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        matInput
+        formControlName="emailFormControl"
+        [errorStateMatcher]="matcher"
+        placeholder="Email"
+      />
+      @if (signupForm.get('emailFormControl')?.hasError('email') &&
+      !signupForm.get('emailFormControl')?.hasError('required')) {
+      <mat-error>Please enter a valid email address</mat-error>
+      } @if (signupForm.get('emailFormControl')?.hasError('required')) {
+      <mat-error>Email is <strong>required</strong></mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Phone Number</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="phoneNumberFormControl"
+        [errorStateMatcher]="matcher"
+        placeholder="Phone Number"
+      />
+      @if (signupForm.get('phoneNumberFormControl')?.hasError('required')) {
+      <mat-error>Phone Number is <strong>required</strong></mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input
+        type="password"
+        matInput
+        formControlName="passwordFormControl"
+        [errorStateMatcher]="matcher"
+        placeholder="Password"
+      />
+      @if (signupForm.get('passwordFormControl')?.hasError('minlength') &&
+      !signupForm.get('passwordFormControl')?.hasError('required')) {
+      <mat-error>Please enter a valid password</mat-error>
+      } @if (signupForm.get('passwordFormControl')?.hasError('required')) {
+      <mat-error>Password is <strong>required</strong></mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Confirm Password</mat-label>
+      <input
+        type="password"
+        matInput
+        formControlName="confirmPasswordFormControl"
+        [errorStateMatcher]="matcher"
+        placeholder="Confirm Password"
+      />
+      @if (signupForm.get('confirmPasswordFormControl')?.hasError('mustMatch')
+      && !signupForm.get('confirmPasswordFormControl')?.hasError('required')) {
+      <mat-error>Passwords must match</mat-error>
+      } @if (signupForm.get('confirmPasswordFormControl')?.hasError('required'))
+      {
+      <mat-error>Confirm Password is <strong>required</strong></mat-error>
+      }
+    </mat-form-field>
+    <button mat-raised-button type="submit">Sign up</button>
+  </form>
+</article>
