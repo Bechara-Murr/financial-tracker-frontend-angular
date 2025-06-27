@@ -13,6 +13,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { MustMatch } from 'src/app/_helpers/ValidationFunctions';
 
 export class SignUpErrorStatMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -61,7 +62,7 @@ export class SignUpComponent {
       ]),
     },
     {
-      validators: this.MustMatch(
+      validators: MustMatch(
         'passwordFormControl',
         'confirmPasswordFormControl'
       ),
@@ -76,29 +77,5 @@ export class SignUpComponent {
     console.log(
       this.signupForm.get('passwordFormControl')?.hasError('minlength')
     );
-  }
-
-  MustMatch(field1: string, field2: string) {
-    return (group: AbstractControl) => {
-      const control = group.get(field1);
-      const matchingControl = group.get(field2);
-
-      if (!control || !matchingControl) {
-        return null;
-      }
-
-      // return if another validator has already found an error on the matchingControl
-      if (matchingControl.errors && !matchingControl.errors['mustMatch']) {
-        return null;
-      }
-
-      // set error on matchingControl if validation fails
-      if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({ mustMatch: true });
-      } else {
-        matchingControl.setErrors(null);
-      }
-      return null;
-    };
   }
 }
