@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -14,6 +14,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MustMatch } from 'src/app/_helpers/ValidationFunctions';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserRegistration, UserRole } from 'src/app/model/User.model';
 
 export class SignUpErrorStatMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -38,44 +40,53 @@ export class SignUpErrorStatMatcher implements ErrorStateMatcher {
   styleUrl: './sign-up.component.scss',
 })
 export class SignUpComponent {
+  constructor(private authService: AuthenticationService) {}
   signupForm = new FormGroup(
     {
-      firstNameFormControl: new FormControl('', [Validators.required]),
-      lastNameFormControl: new FormControl('', [Validators.required]),
-      emailFormControl: new FormControl('', [
-        Validators.required,
-        Validators.email,
-      ]),
-      phoneNumberFormControl: new FormControl('', [
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      phoneNumber: new FormControl('', [
         Validators.required,
         Validators.pattern(
           '^(\\+\\d{1,2}\\s?)?1?-?\\s?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$'
         ),
       ]),
-      passwordFormControl: new FormControl('', [
+      password: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
       ]),
-      confirmPasswordFormControl: new FormControl('', [
+      confirmPassword: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
       ]),
     },
     {
-      validators: MustMatch(
-        'passwordFormControl',
-        'confirmPasswordFormControl'
-      ),
+      validators: MustMatch('password', 'confirmPassword'),
     }
   );
+
+  @ViewChild(FormGroupDirective)
+  private formDir!: FormGroupDirective;
 
   matcher = new SignUpErrorStatMatcher();
 
   onSubmit() {
-    console.warn(this.signupForm.value);
+    let signUpFormValue: Partial<UserRegistration> = this.signupForm.value;
+    const roles: UserRole[] = [
+      {
+        id: '7f000001-984d-1656-8198-4d16780e0000',
+      },
+    ];
 
-    console.log(
-      this.signupForm.get('passwordFormControl')?.hasError('minlength')
-    );
+    signUpFormValue['roles'] = roles;
+
+    this.authService.createUser(signUpFormValue).subscribe({
+      next: (res) => {
+        console.log('User created', res.message);
+        this.formDir.resetForm();
+      },
+      error: (err) => console.error('Error creating user', err),
+    });
   }
 }

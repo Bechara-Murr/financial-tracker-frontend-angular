@@ -6,11 +6,11 @@
       <input
         type="text"
         matInput
-        formControlName="firstNameFormControl"
+        formControlName="firstName"
         [errorStateMatcher]="matcher"
         placeholder="First Name"
       />
-      @if (signupForm.get('firstNameFormControl')?.hasError('required')) {
+      @if (signupForm.get('firstName')?.hasError('required')) {
       <mat-error>First Name is <strong>required</strong></mat-error>
       }
     </mat-form-field>
@@ -19,11 +19,11 @@
       <input
         type="text"
         matInput
-        formControlName="lastNameFormControl"
+        formControlName="lastName"
         [errorStateMatcher]="matcher"
         placeholder="Last Name"
       />
-      @if (signupForm.get('lastNameFormControl')?.hasError('required')) {
+      @if (signupForm.get('lastName')?.hasError('required')) {
       <mat-error>Last Name is <strong>required</strong></mat-error>
       }
     </mat-form-field>
@@ -32,14 +32,14 @@
       <input
         type="email"
         matInput
-        formControlName="emailFormControl"
+        formControlName="email"
         [errorStateMatcher]="matcher"
         placeholder="Email"
       />
-      @if (signupForm.get('emailFormControl')?.hasError('email') &&
-      !signupForm.get('emailFormControl')?.hasError('required')) {
+      @if (signupForm.get('email')?.hasError('email') &&
+      !signupForm.get('email')?.hasError('required')) {
       <mat-error>Please enter a valid email address</mat-error>
-      } @if (signupForm.get('emailFormControl')?.hasError('required')) {
+      } @if (signupForm.get('email')?.hasError('required')) {
       <mat-error>Email is <strong>required</strong></mat-error>
       }
     </mat-form-field>
@@ -48,11 +48,11 @@
       <input
         type="text"
         matInput
-        formControlName="phoneNumberFormControl"
+        formControlName="phoneNumber"
         [errorStateMatcher]="matcher"
         placeholder="Phone Number"
       />
-      @if (signupForm.get('phoneNumberFormControl')?.hasError('required')) {
+      @if (signupForm.get('phoneNumber')?.hasError('required')) {
       <mat-error>Phone Number is <strong>required</strong></mat-error>
       }
     </mat-form-field>
@@ -61,14 +61,14 @@
       <input
         type="password"
         matInput
-        formControlName="passwordFormControl"
+        formControlName="password"
         [errorStateMatcher]="matcher"
         placeholder="Password"
       />
-      @if (signupForm.get('passwordFormControl')?.hasError('minlength') &&
-      !signupForm.get('passwordFormControl')?.hasError('required')) {
+      @if (signupForm.get('password')?.hasError('minlength') &&
+      !signupForm.get('password')?.hasError('required')) {
       <mat-error>Please enter a valid password</mat-error>
-      } @if (signupForm.get('passwordFormControl')?.hasError('required')) {
+      } @if (signupForm.get('password')?.hasError('required')) {
       <mat-error>Password is <strong>required</strong></mat-error>
       }
     </mat-form-field>
@@ -77,15 +77,14 @@
       <input
         type="password"
         matInput
-        formControlName="confirmPasswordFormControl"
+        formControlName="confirmPassword"
         [errorStateMatcher]="matcher"
         placeholder="Confirm Password"
       />
-      @if (signupForm.get('confirmPasswordFormControl')?.hasError('mustMatch')
-      && !signupForm.get('confirmPasswordFormControl')?.hasError('required')) {
+      @if (signupForm.get('confirmPassword')?.hasError('mustMatch') &&
+      !signupForm.get('confirmPassword')?.hasError('required')) {
       <mat-error>Passwords must match</mat-error>
-      } @if (signupForm.get('confirmPasswordFormControl')?.hasError('required'))
-      {
+      } @if (signupForm.get('confirmPassword')?.hasError('required')) {
       <mat-error>Confirm Password is <strong>required</strong></mat-error>
       }
     </mat-form-field>
